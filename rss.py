@@ -36,10 +36,12 @@ import threading
 from queue import Queue
 import signal
 import sys
+import os
+
 
 # Version information
 __version__ = "2.0.0"
-__author__ = "Your Name"
+__author__ = "ourcaldo"
 __description__ = "Multi-threaded Indonesian News RSS Scraper with auto-refresh workers"
 
 
@@ -64,11 +66,11 @@ class IndonesianNewsScraper:
         """
         # Supabase PostgreSQL connection configuration (using connection pooler for better performance)
         self.db_config = {
-            'host': 'aws-1-ap-southeast-1.pooler.supabase.com',
-            'port': 5432,
-            'database': 'postgres',
-            'user': 'postgres.fdvrmoufpiqjqqmphorc',
-            'password': 'Adk06092000'
+            'host': os.getenv('DB_HOST', 'aws-1-ap-southeast-1.pooler.supabase.com'),
+            'port': int(os.getenv('DB_PORT', '5432')),
+            'database': os.getenv('DB_NAME', 'postgres'),
+            'user': os.getenv('DB_USER', 'postgres.fdvrmoufpiqjqqmphorc'),
+            'password': os.getenv('DB_PASSWORD', 'Adk06092000')
         }
         
         # Worker and threading configuration
